@@ -1,23 +1,28 @@
 #![allow(unused)]
-use loadconf_derive::LoadConf;
 
 #[test]
 fn load_file() -> Result<(), anyhow::Error> {
-    #[derive(Debug, Eq, PartialEq, Default, LoadConf)]
+    #[derive(Debug, PartialEq, Default, loadconf_derive::LoadConf)]
     struct Config {
         pub token1: usize,
-        pub token2: Vec<String>,
+        pub token2: f32,
+        pub token3: bool,
+        pub token4: Vec<String>,
+        pub token5: Vec<i64>,
     }
     let demo = Config::load("./config.conf")?;
     assert_eq!(
         demo,
         Config {
             token1: 999,
-            token2: vec![
-                "value2-1".to_string(),
-                "value2-2".to_string(),
-                "@".to_string()
-            ]
+            token2: 3.14159,
+            token3: true,
+            token4: vec![
+                "str-1".to_string(),
+                "str-2".to_string(),
+                "str-123ABC!@$%^&*()".to_string(),
+            ],
+            token5: vec![1, 2, 3, 4, 5],
         }
     );
     Ok(())
@@ -25,7 +30,7 @@ fn load_file() -> Result<(), anyhow::Error> {
 
 #[test]
 fn load_raw() -> Result<(), anyhow::Error> {
-    #[derive(Debug, Eq, PartialEq, Default, LoadConf)]
+    #[derive(Debug, Eq, PartialEq, Default, loadconf_derive::LoadConf)]
     struct Config {
         pub a: usize,
         pub b_1: usize,
