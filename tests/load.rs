@@ -2,7 +2,7 @@
 
 #[test]
 fn load_file() -> Result<(), anyhow::Error> {
-    #[derive(Debug, PartialEq, Default, loadconf_derive::LoadConf)]
+    #[derive(Debug, PartialEq, loadconf_derive::LoadConf)]
     struct Config {
         pub token1: usize,
         pub token2: f32,
@@ -30,7 +30,7 @@ fn load_file() -> Result<(), anyhow::Error> {
 
 #[test]
 fn load_raw() -> Result<(), anyhow::Error> {
-    #[derive(Debug, Eq, PartialEq, Default, loadconf_derive::LoadConf)]
+    #[derive(Debug, PartialEq, loadconf_derive::LoadConf)]
     struct Config {
         pub a: usize,
         pub b_1: usize,
