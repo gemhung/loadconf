@@ -1,4 +1,4 @@
-<h1 align="center">LoadConf derive macro</h1>
+<h1 align="center">LoadConf</h1>
 
 <div align="center">
   <!-- CI -->
@@ -14,27 +14,28 @@
 </div>
 
 # Task1
-Create a program that loads a file with the same syntax as Linux's sysctl.conf and stores it in data types in a programming language
-```
+> Create a program that loads a file with the same syntax as Linux's sysctl.conf and stores it in data types in a programming language
+
 See my parser (https://github.com/gemhung/loadconf/blob/main/src/lib.rs#L87)
-```
+
 
 # Task2
-When executing the program you wrote in Task 1, please make sure that the input values can be validated
-```
-I used derive macro and leverage rust type system as the schema to secure type correctness
+> When executing the program you wrote in Task 1, please make sure that the input values can be validated
+
+I used derive macro and leverage rust type system for schema to secure type correctness    
 See my macro (https://github.com/gemhung/loadconf/blob/main/src/lib.rs#L10)
-```
+
 
 # LoadConf
-`LoadConf` is `rust derive macro` to load configuration file based on `sysctl.conf` (https://man7.org/linux/man-pages/man5/sysctl.conf.5.html)
+`LoadConf` is `rust derive macro` to load configuration file based on the syntax of `sysctl.conf` (https://man7.org/linux/man-pages/man5/sysctl.conf.5.html)
 
-# keywords
+# Keywords
 ```
 rust, nom, parser, derive macro, file processing
 ```
 
-# Use case
+# Usage
+See [test cases](https://github.com/gemhung/loadconf/blob/main/tests/load.rs)
 ```rust
 //config.conf
 /*
@@ -51,7 +52,7 @@ token5 = 1 2 3 4 5
 
 */
 fn load_file() -> Result<(), anyhow::Error> {
-    #[derive(Debug, PartialEq, Default, loadconf_derive::LoadConf)]
+    #[derive(Debug, PartialEq, loadconf_derive::LoadConf)] // --> Derive `LoadConf` here
     struct Config {
         pub token1: usize,
         pub token2: f32,
@@ -82,6 +83,6 @@ fn load_file() -> Result<(), anyhow::Error> {
 # Todo
 * Support `token=value ;I'm comment`
 * Support types such as `tuple` and `array`
-* Add tests to cover more use case
+* More tests cases
 * Better error messages
 
